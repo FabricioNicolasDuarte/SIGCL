@@ -1,38 +1,47 @@
-# 1. Usar una imagen oficial de PHP con un servidor Apache integrado
-FROM php:8.2-apache
+FROM php:8.3-apache
 
-# 2. Instalar dependencias del sistema y extensiones PHP que necesita Laravel
+# 1. Instalar librerías del sistema, NodeJS y extensiones PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libzip-dev \
     zip \
     unzip \
     git \
     libpq-dev \
     libonig-dev \
-    nodejs \
-    npm \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring gd
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring gd zip bcmath pcntl
 
-# 3. Habilitar las URLs amigables de Apache (mod_rewrite)
+# 2. Habilitar URLs amigables de Apache
 RUN a2enmod rewrite
 
-# 4. Cambiar la carpeta principal de Apache a la carpeta /public de Laravel
+# 3. Configurar la carpeta public de Laravel como raíz
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# 5. Copiar todo el código de tu proyecto al contenedor
-COPY . /var/www/html
-
-# 6. Instalar Composer para las librerías de PHP
+# 4. Traer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --optimize-autoloader --no-dev
 
-# 7. Instalar Tailwind/Vite y compilar los estilos neón
+WORKDIR /var/www/html
+
+# 5. Copiar SOLO las dependencias primero (Magia para acelerar Docker)
+COPY composer.json composer.lock ./
+
+# 6. Instalar PHP forzando la compatibilidad
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+
+# 7. Copiar el resto del proyecto
+COPY . .
+
+# 8. Instalar Node y compilar los estilos de la app
 RUN npm install
 RUN npm run build
 
-# 8. Darle permisos al servidor para guardar PDFs y cachés
+# 9. Permisos necesarios para que Laravel guarde PDFs y cachés
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
