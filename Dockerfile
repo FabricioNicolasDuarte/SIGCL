@@ -33,17 +33,13 @@ WORKDIR /var/www/html
 # 5. Copiar TODO el código del proyecto al contenedor
 COPY . .
 
-# 6. Instalar dependencias de PHP (Bloqueando los scripts automáticos que causan el error)
+# 6. Instalar dependencias de PHP
 RUN composer install --optimize-autoloader --no-dev --no-scripts --ignore-platform-reqs
 
-## 7. Instalar Node y compilar los estilos
+# 7. Instalar Node y compilar los estilos de Vite
 RUN npm install
 RUN npm run build
 
-# 8. Crear el archivo de base de datos en blanco y ejecutar migraciones
-RUN touch /var/www/html/database/database.sqlite
-RUN php artisan migrate --force
-
-# 9. Dar permisos absolutos para que el servidor pueda escribir en la base de datos y generar PDFs
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+# 8. Dar permisos absolutos para que el servidor pueda leer los estilos (Vite) y escribir en storage
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/build
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/build
