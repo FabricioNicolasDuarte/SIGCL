@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ReportController;
-use Illuminate\Support\Facades\Artisan;
 
 // Página de inicio
 Route::view('/', 'welcome');
@@ -57,18 +56,4 @@ Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::get('/mis-clases', \App\Livewire\Teacher\MyClasses::class)->name('teacher.clases');
 });
 
-// RUTA SECRETA PARA INSTALAR LA BASE DE DATOS EN PRODUCCIÓN
-Route::get('/iniciar-sistema-secreto', function () {
-    try {
-        // Ejecuta las migraciones por si acaso faltó alguna
-        Artisan::call('migrate', ['--force' => true]);
-
-        // Ejecuta el Seeder para crear al Super Admin y los roles
-        Artisan::call('db:seed', ['--force' => true]);
-
-        return '¡ÉXITO! Base de datos construida y Administrador creado. Ya puedes ir al Login.';
-    } catch (\Exception $e) {
-        return 'ERROR: ' . $e->getMessage();
-    }
-});
 require __DIR__.'/auth.php';

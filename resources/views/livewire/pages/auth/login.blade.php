@@ -17,7 +17,27 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = auth()->user();
+
+        // SEMÁFORO INTELIGENTE DE ROLES
+        if ($user->hasRole('super_admin') || $user->hasRole('admin')) {
+            // Súper Administrador
+            $rutaDestino = route('dashboard');
+
+        } elseif ($user->hasRole('profesor')) {
+            // Profesor
+            $rutaDestino = route('teacher.clases');
+
+        } elseif ($user->hasRole('estudiante')) {
+            // Estudiante
+            $rutaDestino = route('student.cursos');
+
+        } else {
+            // Fallback por defecto
+            $rutaDestino = route('dashboard');
+        }
+
+        $this->redirectIntended(default: $rutaDestino, navigate: true);
     }
 }; ?>
 
