@@ -1,6 +1,6 @@
 FROM php:8.3-apache
 
-# 1. Instalar librerías del sistema, NodeJS y extensiones PHP
+# 1. Instalar dependencias del sistema y NodeJS
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -30,18 +30,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# 5. Copiar SOLO las dependencias primero (Magia para acelerar Docker)
-COPY composer.json composer.lock ./
-
-# 6. Instalar PHP forzando la compatibilidad
-RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
-
-# 7. Copiar el resto del proyecto
+# 5. Copiar TODO el código del proyecto al contenedor
 COPY . .
 
-# 8. Instalar Node y compilar los estilos de la app
+# 6. Instalar dependencias de PHP (Bloqueando los scripts automáticos que causan el error)
+RUN composer install --optimize-autoloader --no-dev --no-scripts --ignore-platform-reqs
+
+# 7. Instalar Node y compilar los estilos
 RUN npm install
 RUN npm run build
 
-# 9. Permisos necesarios para que Laravel guarde PDFs y cachés
+# 8. Permisos necesarios para Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
