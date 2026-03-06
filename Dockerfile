@@ -34,6 +34,7 @@ COPY . .
 # 6. Instalar dependencias de PHP
 RUN composer install --optimize-autoloader --no-dev --no-scripts --ignore-platform-reqs
 
-# 7. Dar permisos absolutos
+# 7. Dar permisos absolutos (y crear la carpeta si no existe para evitar crash)
+RUN mkdir -p /var/www/html/public/build
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/build
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/build
