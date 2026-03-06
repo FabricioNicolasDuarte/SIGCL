@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        // AQUÍ LE ENSEÑAMOS A LARAVEL LAS PALABRAS DE SPATIE
+        // ESCUDO PROXY: Le decimos a Laravel que confíe en el servidor de Render (Evita el Error 419)
+        $middleware->trustProxies(at: '*');
+
+        // AQUÍ LE ENSEÑAMOS A LARAVEL LAS PALABRAS DE SPATIE (Tus roles)
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

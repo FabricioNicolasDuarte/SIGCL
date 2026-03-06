@@ -57,22 +57,14 @@ Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::get('/mis-clases', \App\Livewire\Teacher\MyClasses::class)->name('teacher.clases');
 });
 
-// RUTA MAESTRA: INSTALA BASE DE DATOS Y LUEGO LIMPIA CACHÉ
-Route::get('/iniciar-todo', function () {
+// RUTA TEMPORAL PARA SINCRONIZAR LOS ESTILOS Y VISTAS
+Route::get('/limpiar-vistas', function () {
     try {
-        // 1. PRIMERO: Construir y poblar la nueva base de datos PostgreSQL
-        \Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
-            '--force' => true,
-            '--seed' => true
-        ]);
-
-        // 2. SEGUNDO: Ahora que las tablas existen, fulminar la caché rebelde
-        \Illuminate\Support\Facades\Artisan::call('view:clear');
-        \Illuminate\Support\Facades\Artisan::call('cache:clear');
-        \Illuminate\Support\Facades\Artisan::call('route:clear');
-        \Illuminate\Support\Facades\Artisan::call('config:clear');
-
-        return '¡MISIÓN CUMPLIDA! Base de Datos PostgreSQL construida y Caché purgada. Ya puedes ir a la página principal.';
+        Artisan::call('view:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('route:clear');
+        Artisan::call('config:clear');
+        return 'Visión restaurada. Ve a la página principal y presiona Ctrl + F5';
     } catch (\Exception $e) {
         return 'ERROR: ' . $e->getMessage();
     }
