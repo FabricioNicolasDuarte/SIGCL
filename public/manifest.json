@@ -1,0 +1,23 @@
+{
+    "name": "SIGCL Pro - Sistema de Gestión",
+    "short_name": "SIGCL",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "background_color": "#050814",
+    "theme_color": "#00f5ff",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/images/Recurso1.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/images/Recurso1.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

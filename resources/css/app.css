@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* Efecto Vidrio Esmerilado (Paneles Principales) */
+    .glass-panel {
+        @apply bg-[#0f172a]/40 backdrop-blur-xl border border-white/10;
+    }
+
+    /* Tarjetas con Vidrio y Gradiente */
+    .glass-card {
+        @apply bg-gradient-to-br from-white/5 to-transparent backdrop-blur-md border border-white/10 rounded-2xl transition-all duration-500 ease-out;
+    }
+
+    /* Resplandores Flúor al pasar el mouse (Usando los HEX exactos para evitar el error de Tailwind) */
+    .hover-glow-primary:hover {
+        @apply shadow-[0_0_25px_rgba(0,245,255,0.4)] border-[#00f5ff]/50 transform -translate-y-2;
+    }
+
+    .hover-glow-secondary:hover {
+        @apply shadow-[0_0_25px_rgba(0,255,102,0.4)] border-[#00ff66]/50 transform -translate-y-2;
+    }
+
+    .hover-glow-accent:hover {
+        @apply shadow-[0_0_25px_rgba(0,85,255,0.4)] border-[#0055ff]/50 transform -translate-y-2;
+    }
+
+    /* Texto con luz propia */
+    .text-glow {
+        text-shadow: 0 0 10px currentColor;
+    }
+}
+
+body {
+    /* Fondo con un gradiente radial oscuro y elegante */
+    background: radial-gradient(circle at 50% 0%, #0b1221 0%, #050814 100%);
+    background-attachment: fixed;
+    @apply antialiased text-base-content min-h-screen overflow-x-hidden;
+}
+
+/* Modificar la barra de desplazamiento para que se vea Pro */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #050814; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00f5ff; }
+
+/* Scrollbar especial y más fina para el interior del chat de IA */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #0055ff; border-radius: 10px; }
