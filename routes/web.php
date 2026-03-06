@@ -56,4 +56,13 @@ Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::get('/mis-clases', \App\Livewire\Teacher\MyClasses::class)->name('teacher.clases');
 });
 
+// RUTA TEMPORAL PARA LIMPIAR LA CACHÉ
+Route::get('/limpiar-todo', function () {
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    return '¡Memoria borrada! Ya puedes ir a la página principal.';
+});
+
 require __DIR__.'/auth.php';
