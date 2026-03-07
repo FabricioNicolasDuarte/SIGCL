@@ -71,6 +71,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </span>
                 </a>
+                <a href="#caracteristicas" class="px-8 py-4 bg-transparent border border-white/20 text-white font-black uppercase tracking-widest text-xs rounded-xl hover:bg-white/5 hover:border-white/50 backdrop-blur-sm transition-all">
+                    Explorar Arquitectura
+                </a>
             @else
                 <a href="{{ route('login') }}" class="group relative px-8 py-4 bg-[#00f5ff] text-black font-black uppercase tracking-widest text-xs rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,245,255,0.4)] hover:shadow-[0_0_50px_rgba(0,245,255,0.6)] transition-all">
                     <span class="relative z-10 flex items-center gap-2">
