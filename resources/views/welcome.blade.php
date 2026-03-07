@@ -18,7 +18,8 @@
 <body class="antialiased bg-grid-pattern relative">
 
     <div class="fixed inset-0 z-[-2]">
-        <img src="{{ asset('images/fondo1.png') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-20">
+        <img src="{{ asset('images/fondo1.png') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-40">
+        <div class="absolute inset-0 bg-black/70"></div>
     </div>
 
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00f5ff]/20 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
@@ -26,12 +27,12 @@
 
     <nav class="relative z-50 border-b border-white/10 bg-black/50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-6">
                 <div class="relative flex items-center justify-center">
                     <div class="absolute inset-0 bg-[#00f7ff00] blur-[15px] opacity-30 rounded-full"></div>
-                    <img src="{{ asset('images/Recurso2.png') }}" alt="SIGCL Logo" class="h-10 w-auto relative z-10 drop-shadow-[0_0_10px_rgba(0,245,255,0.8)]">
+                    <img src="{{ asset('images/Recurso2.png') }}" alt="SIGCL Logo" class="h-20 w-auto relative z-10 drop-shadow-[0_0_15px_rgba(0,245,255,0.5)]">
                 </div>
-                <span class="text-xl font-black tracking-[0.2em] uppercase hidden sm:block">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
+                <span class="text-2xl font-black tracking-[0.2em] uppercase hidden sm:block">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
             </div>
             <div>
                 @auth
@@ -123,10 +124,19 @@
         </div>
     </section>
 
-    <footer class="border-t border-white/10 py-8 text-center bg-black">
-        <p class="text-[10px] text-gray-600 font-mono uppercase tracking-[0.2em]">
-            &copy; {{ date('Y') }} SIGCL PRO. Arquitectura de Software diseñada para el futuro.
-        </p>
+    <footer class="border-t border-white/10 py-10 text-center bg-black">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col items-center gap-4">
+            <img src="{{ asset('images/Recurso2.png') }}" alt="SIGCL Logo Pequeño" class="h-8 w-auto opacity-50 grayscale hover:grayscale-0 transition-all">
+            <div class="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em] leading-relaxed">
+                <p class="text-gray-400 mb-1">
+                    &copy; {{ date('Y') }} SIGCL PRO. Todos los derechos reservados.
+                </p>
+                <p>
+                    El diseño, código fuente, logotipos y arquitectura de este software son propiedad intelectual exclusiva de <span class="text-[#00f5ff] font-bold">Skadia</span>. <br class="hidden sm:block" />
+                    Queda estrictamente prohibida su reproducción, distribución o modificación sin autorización previa.
+                </p>
+            </div>
+        </div>
     </footer>
 
 </body>
