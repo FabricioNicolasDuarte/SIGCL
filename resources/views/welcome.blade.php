@@ -28,7 +28,7 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
                 <div class="relative flex items-center justify-center">
-                    <div class="absolute inset-0 bg-[#00f5ff] blur-[15px] opacity-30 rounded-full"></div>
+                    <div class="absolute inset-0 bg-[#00f7ff00] blur-[15px] opacity-30 rounded-full"></div>
                     <img src="{{ asset('images/Recurso2.png') }}" alt="SIGCL Logo" class="h-10 w-auto relative z-10 drop-shadow-[0_0_10px_rgba(0,245,255,0.8)]">
                 </div>
                 <span class="text-xl font-black tracking-[0.2em] uppercase hidden sm:block">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
