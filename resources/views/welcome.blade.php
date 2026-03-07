@@ -17,16 +17,21 @@
 </head>
 <body class="antialiased bg-grid-pattern relative">
 
-    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00f5ff]/20 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#ff0055]/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed inset-0 z-[-2]">
+        <img src="{{ asset('img/background.jpg') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-20">
+    </div>
+
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00f5ff]/20 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#ff0055]/20 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
 
     <nav class="relative z-50 border-b border-white/10 bg-black/50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded bg-gradient-to-br from-[#00f5ff] to-[#0055ff] flex items-center justify-center shadow-[0_0_15px_rgba(0,245,255,0.5)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <div class="flex items-center gap-4">
+                <div class="relative flex items-center justify-center">
+                    <div class="absolute inset-0 bg-[#00f5ff] blur-[15px] opacity-30 rounded-full"></div>
+                    <img src="{{ asset('img/logo.png') }}" alt="SIGCL Logo" class="h-10 w-auto relative z-10 drop-shadow-[0_0_10px_rgba(0,245,255,0.8)]">
                 </div>
-                <span class="text-xl font-black tracking-[0.2em] uppercase">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
+                <span class="text-xl font-black tracking-[0.2em] uppercase hidden sm:block">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
             </div>
             <div>
                 @auth
@@ -45,7 +50,7 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff66] opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-[#00ff66]"></span>
                 </span>
-                Sistema Online V 2.0
+                Sistema Online De Capacitaciones y Cursos
             </p>
         </div>
 
@@ -54,7 +59,7 @@
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f5ff] to-[#0055ff] text-glow-cyan">Evolucionada.</span>
         </h1>
 
-        <p class="text-gray-400 max-w-2xl mx-auto mb-12 text-sm md:text-base leading-relaxed">
+        <p class="text-gray-400 max-w-2xl mx-auto mb-12 text-sm md:text-base leading-relaxed backdrop-blur-sm bg-black/20 p-4 rounded-xl border border-white/5">
             Una plataforma integral diseñada para instituciones de alto rendimiento. Control biométrico de asistencia, aulas virtuales en tiempo real y un Tutor de Inteligencia Artificial disponible 24/7.
         </p>
 
@@ -73,14 +78,14 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </span>
                 </a>
-                <a href="#caracteristicas" class="px-8 py-4 bg-transparent border border-white/20 text-white font-black uppercase tracking-widest text-xs rounded-xl hover:bg-white/5 hover:border-white/50 transition-all">
+                <a href="#caracteristicas" class="px-8 py-4 bg-transparent border border-white/20 text-white font-black uppercase tracking-widest text-xs rounded-xl hover:bg-white/5 hover:border-white/50 backdrop-blur-sm transition-all">
                     Explorar Arquitectura
                 </a>
             @endauth
         </div>
     </main>
 
-    <section id="caracteristicas" class="relative z-10 border-t border-white/10 bg-[#02040a] py-24">
+    <section id="caracteristicas" class="relative z-10 border-t border-white/10 bg-[#02040a]/90 backdrop-blur-xl py-24">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-sm text-[#ff0055] font-black uppercase tracking-[0.3em] mb-3 text-glow-pink">Especificaciones Técnicas</h2>
@@ -88,28 +93,28 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:border-[#00f5ff]/30 transition-colors group">
+                <div class="bg-black/40 border border-white/10 rounded-3xl p-8 hover:border-[#00f5ff]/50 hover:shadow-[0_0_30px_rgba(0,245,255,0.1)] transition-all group backdrop-blur-sm">
                     <div class="w-12 h-12 rounded-xl bg-[#00f5ff]/10 flex items-center justify-center mb-6 text-[#00f5ff] group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                     </div>
                     <h4 class="text-lg font-black text-white uppercase tracking-wider mb-3">Pases QR Dinámicos</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Control de asistencia impenetrable. Los pases de abordaje caducan y se regeneran, asegurando la integridad del registro de cada alumno.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Control de asistencia impenetrable. Los pases de abordaje caducan y se regeneran, asegurando la integridad del registro de cada alumno.</p>
                 </div>
 
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:border-[#ff0055]/30 transition-colors group">
+                <div class="bg-black/40 border border-white/10 rounded-3xl p-8 hover:border-[#ff0055]/50 hover:shadow-[0_0_30px_rgba(255,0,85,0.1)] transition-all group backdrop-blur-sm">
                     <div class="w-12 h-12 rounded-xl bg-[#ff0055]/10 flex items-center justify-center mb-6 text-[#ff0055] group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
                     <h4 class="text-lg font-black text-white uppercase tracking-wider mb-3">Tutor de IA Integrado</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Asistencia académica 24/7. Un motor de Inteligencia Artificial entrenado para resolver dudas de los estudiantes en tiempo real desde el panel.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Asistencia académica 24/7. Un motor de Inteligencia Artificial entrenado para resolver dudas de los estudiantes en tiempo real desde el panel.</p>
                 </div>
 
-                <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:border-[#00ff66]/30 transition-colors group">
+                <div class="bg-black/40 border border-white/10 rounded-3xl p-8 hover:border-[#00ff66]/50 hover:shadow-[0_0_30px_rgba(0,255,102,0.1)] transition-all group backdrop-blur-sm">
                     <div class="w-12 h-12 rounded-xl bg-[#00ff66]/10 flex items-center justify-center mb-6 text-[#00ff66] group-hover:scale-110 transition-transform">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     </div>
                     <h4 class="text-lg font-black text-white uppercase tracking-wider mb-3">Transmisión WebRTC</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Salas virtuales integradas directamente en el panel sin requerir software externo. Videoconferencias holográficas de alta definición.</p>
+                    <p class="text-sm text-gray-400 leading-relaxed">Salas virtuales integradas directamente en el panel sin requerir software externo. Videoconferencias holográficas de alta definición.</p>
                 </div>
             </div>
         </div>
