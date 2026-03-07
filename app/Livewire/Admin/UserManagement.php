@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule; // <-- Importamos la clase Rule de Laravel
 
 #[Layout('layouts.app', ['header' => 'Gestión de Usuarios'])]
 class UserManagement extends Component
@@ -18,14 +19,15 @@ class UserManagement extends Component
     public $is_active = true;
     public $isOpen = false;
 
-    // Reglas de validación base
+    // Reglas de validación base (Ahora preparadas para PostgreSQL)
     protected function rules()
     {
         return [
             'name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'dni' => 'nullable|string|max:20|unique:users,dni,' . $this->user_id,
-            'email' => 'required|email|unique:users,email,' . $this->user_id,
+            // Usamos Rule::unique para que ignore inteligentemente solo si hay un ID numérico válido
+            'dni' => ['nullable', 'string', 'max:20', Rule::unique('users', 'dni')->ignore($this->user_id ?: null)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id ?: null)],
             'phone' => 'nullable|string|max:20',
             'role' => 'required|exists:roles,name',
             // La contraseña solo es obligatoria si estamos creando un usuario nuevo
@@ -56,7 +58,7 @@ class UserManagement extends Component
 
     private function resetInputFields()
     {
-        $this->user_id = '';
+        $this->user_id = null; // <-- Cambiamos texto vacío por null para que PostgreSQL no se queje
         $this->name = '';
         $this->last_name = '';
         $this->dni = '';
