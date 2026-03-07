@@ -18,7 +18,7 @@
 <body class="antialiased bg-grid-pattern relative">
 
     <div class="fixed inset-0 z-[-2]">
-        <img src="{{ asset('img/background.jpg') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-20">
+        <img src="{{ asset('images/fondo1.png') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-20">
     </div>
 
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00f5ff]/20 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
@@ -29,7 +29,7 @@
             <div class="flex items-center gap-4">
                 <div class="relative flex items-center justify-center">
                     <div class="absolute inset-0 bg-[#00f5ff] blur-[15px] opacity-30 rounded-full"></div>
-                    <img src="{{ asset('img/logo.png') }}" alt="SIGCL Logo" class="h-10 w-auto relative z-10 drop-shadow-[0_0_10px_rgba(0,245,255,0.8)]">
+                    <img src="{{ asset('images/Recurso2.png') }}" alt="SIGCL Logo" class="h-10 w-auto relative z-10 drop-shadow-[0_0_10px_rgba(0,245,255,0.8)]">
                 </div>
                 <span class="text-xl font-black tracking-[0.2em] uppercase hidden sm:block">SIGCL <span class="text-[#00f5ff]">PRO</span></span>
             </div>
