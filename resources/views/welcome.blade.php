@@ -18,7 +18,7 @@
 <body class="antialiased bg-grid-pattern relative">
 
     <div class="fixed inset-0 z-[-2]">
-        <img src="{{ asset('images/fondo1.png') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-40">
+        <img src="{{ asset('images/fondo3.png') }}" alt="Fondo SIGCL" class="w-full h-full object-cover opacity-40">
         <div class="absolute inset-0 bg-black/70"></div>
     </div>
 
