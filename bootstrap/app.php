@@ -12,8 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        // ESCUDO PROXY: Le decimos a Laravel que confíe en el servidor de Render (Evita el Error 419)
+        // ESCUDO PROXY: Le decimos a Laravel que confíe en el servidor de Render (Evita el Error 419 en general)
         $middleware->trustProxies(at: '*');
+
+        // BYPASS CSRF: Permitir cerrar sesión aunque el token de la página haya expirado (Solución final al 419 del Logout)
+        $middleware->validateCsrfTokens(except: [
+            'logout',
+            '/logout'
+        ]);
 
         // AQUÍ LE ENSEÑAMOS A LARAVEL LAS PALABRAS DE SPATIE (Tus roles)
         $middleware->alias([
