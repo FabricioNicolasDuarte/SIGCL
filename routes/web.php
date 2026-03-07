@@ -29,8 +29,8 @@ Route::get('/sala-virtual/{id}', \App\Livewire\VirtualClassroom::class)
     ->middleware(['auth'])
     ->name('virtual.room');
 
-// --- NUESTRA RUTA DE LOGOUT PERSONALIZADA ---
-Route::post('/logout', function (Request $request) {
+// --- NUESTRA RUTA DE LOGOUT PERSONALIZADA (AHORA ACEPTA GET) ---
+Route::any('/logout', function (Request $request) {
     Auth::guard('web')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();

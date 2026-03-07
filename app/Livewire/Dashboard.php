@@ -22,7 +22,11 @@ class Dashboard extends Component
         $activeCourses = Training::where('is_active', true)->count();
         $totalCampuses = Campus::where('is_active', true)->count();
         $totalEnrollments = Enrollment::count();
-        $todayAttendances = Attendance::where('date', now()->toDateString())->count();
+
+        // CORRECCIÓN: Buscamos la fecha haciendo un JOIN con la tabla de clases
+        $todayAttendances = Attendance::join('course_classes', 'attendances.course_class_id', '=', 'course_classes.id')
+            ->where('course_classes.date', now()->toDateString())
+            ->count();
 
         $recentAttendances = Attendance::with(['enrollment.student', 'enrollment.training'])
             ->orderBy('id', 'desc')->take(5)->get();
@@ -31,13 +35,16 @@ class Dashboard extends Component
             ->orderBy('id', 'desc')->take(5)->get();
 
         // 2. DATA PARA GRÁFICOS (CHART.JS)
-        // Gráfico 1: Asistencias de los últimos 7 días
+        // Gráfico 1: Asistencias de los últimos 7 días (CORREGIDO)
         $trendLabels = [];
         $trendData = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = now()->subDays($i);
             $trendLabels[] = $date->format('d/m');
-            $trendData[] = Attendance::where('date', $date->toDateString())->count();
+
+            $trendData[] = Attendance::join('course_classes', 'attendances.course_class_id', '=', 'course_classes.id')
+                ->where('course_classes.date', $date->toDateString())
+                ->count();
         }
 
         // Gráfico 2: Top Cursos con más alumnos (Máximo 5)
