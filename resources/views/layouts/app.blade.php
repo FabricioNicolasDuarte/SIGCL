@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="sigcl-neon">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SIGCL Pro') }}</title>
 
@@ -21,13 +21,19 @@
 </head>
 <body class="font-sans relative text-gray-200 min-h-screen bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(5, 8, 20, 0.85), rgba(0, 0, 0, 0.95)), url('{{ asset('images/fondo1.png') }}');">
 
-    <div class="min-h-screen flex flex-col md:flex-row relative">
+    <div class="min-h-screen flex relative overflow-hidden w-full" x-data="{ sidebarOpen: false }">
 
-        <aside class="w-full md:w-72 bg-[#050814]/90 backdrop-blur-2xl hidden md:flex flex-col border-r border-[#0a192f] shadow-2xl z-40">
-            <div class="p-6 flex items-center justify-center border-b border-[#0a192f]">
+        <div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm" @click="sidebarOpen = false"></div>
+
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 w-72 bg-[#050814]/95 backdrop-blur-3xl transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 flex flex-col border-r border-[#0a192f] shadow-2xl">
+
+            <div class="p-6 flex items-center justify-between border-b border-[#0a192f]">
                 <a href="{{ route('dashboard') }}" class="block transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('images/Recurso1.png') }}" alt="SIGCL Pro Logo" class="h-14 w-auto drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
                 </a>
+                <button @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-[#ff0055] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
             </div>
 
             <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -64,36 +70,45 @@
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <main class="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
 
-            <header class="bg-[#050814]/80 backdrop-blur-md border-b border-[#0a192f] z-10 p-4 flex justify-between items-center md:justify-end shadow-xl">
+            <header class="bg-[#050814]/80 backdrop-blur-md border-b border-[#0a192f] z-10 p-3 sm:p-4 flex justify-between items-center shadow-xl">
 
-                <div class="md:hidden flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('images/Recurso1.png') }}" alt="SIGCL Pro Logo" class="h-8 w-auto drop-shadow-[0_0_10px_rgba(0,245,255,0.3)]">
+                <div class="flex items-center gap-3 md:hidden">
+                    <button @click="sidebarOpen = true" class="p-2 bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/30 rounded-lg hover:bg-[#00f5ff] hover:text-black transition-all shadow-[0_0_10px_rgba(0,245,255,0.2)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    </button>
+                    <a href="{{ route('dashboard') }}" class="block sm:hidden">
+                        <img src="{{ asset('images/Recurso1.png') }}" alt="Logo" class="h-8 w-auto">
                     </a>
                 </div>
 
-                <div class="flex items-center gap-4">
+                <div class="hidden md:block flex-1"></div>
 
-                    <div class="border border-[#ff0055]/30 rounded-full bg-[#ff0055]/10 flex items-center justify-center p-1 transition-all hover:bg-[#ff0055]/20 shadow-[0_0_15px_rgba(255,0,85,0.2)]">
+                <div class="flex items-center gap-2 sm:gap-4 ml-auto">
+
+                    <div class="border border-[#ff0055]/30 rounded-full bg-[#ff0055]/10 flex items-center justify-center p-1 sm:p-2 transition-all hover:bg-[#ff0055]/20 shadow-[0_0_15px_rgba(255,0,85,0.2)]">
                         <livewire:layout.notification-bell />
                     </div>
 
-                    <div class="text-right hidden md:block border-r border-white/10 pr-4 mr-1">
-                        <div class="text-sm font-semibold text-white">{{ Auth::user()->name ?? 'Usuario' }} {{ Auth::user()->last_name ?? '' }}</div>
+                    <div class="text-right hidden sm:block border-r border-white/10 pr-4 mr-1">
+                        <div class="text-sm font-semibold text-white">{{ Auth::user()->name ?? 'Usuario' }}</div>
                         <div class="text-[10px] text-[#00f5ff] font-medium tracking-wide uppercase">{{ Auth::user()->roles->first()->name ?? 'Invitado' }}</div>
                     </div>
 
                     <div class="dropdown dropdown-end">
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar hover:shadow-[0_0_15px_rgba(0,245,255,0.4)] transition-all">
-                            <div class="w-10 rounded-full border-2 border-[#00f5ff]/50 bg-black">
-                                <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="object-cover w-full h-full" />
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#00f5ff]/50 bg-black">
+                                <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="object-cover w-full h-full rounded-full" />
                             </div>
                         </div>
                         <ul tabindex="0" class="mt-4 z-50 p-2 shadow-[0_0_30px_rgba(0,245,255,0.15)] menu menu-sm dropdown-content bg-[#050814] border border-[#0a192f] rounded-2xl w-56">
+                            <li class="sm:hidden px-4 py-2 border-b border-white/10 mb-2">
+                                <span class="font-bold text-white block">{{ Auth::user()->name }}</span>
+                                <span class="text-[10px] text-[#00f5ff] uppercase">{{ Auth::user()->roles->first()->name ?? 'Invitado' }}</span>
+                            </li>
                             <li class="mb-2">
-                                <a href="{{ route('profile') }}" class="text-gray-300 font-bold hover:text-[#00ff66] hover:bg-white/5 py-3">
+                                <a href="{{ route('profile') }}" class="text-gray-300 font-bold hover:text-[#00ff66] hover:bg-white/5 py-3 rounded-xl">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                                     Mi Perfil y Foto
                                 </a>
@@ -112,9 +127,9 @@
                 </div>
             </header>
 
-            <div class="flex-1 overflow-y-auto p-6 md:p-10 relative">
+            <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 md:p-10 relative">
                 @if (isset($header))
-                    <h1 class="text-2xl font-black text-white uppercase tracking-widest border-l-4 border-[#00f5ff] pl-4 mb-8">{{ $header }}</h1>
+                    <h1 class="text-xl sm:text-2xl font-black text-white uppercase tracking-widest border-l-4 border-[#00f5ff] pl-3 sm:pl-4 mb-6 sm:mb-8">{{ $header }}</h1>
                 @endif
                 {{ $slot }}
             </div>
