@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 // Página de inicio
 Route::view('/', 'welcome');
 
-// Panel principal (Protegido, solo usuarios logueados)
+// Panel principal
 Route::get('/dashboard', \App\Livewire\Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -19,23 +19,23 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-// --- RUTA PARA DESCARGAR EL PDF (ACTA OFICIAL) ---
+// Reportes y Salas
 Route::get('/reportes/acta/{id}', [ReportController::class, 'exportTrainingMatrix'])
     ->middleware(['auth'])
     ->name('reports.matrix');
 
-// --- RUTA DEL SALÓN VIRTUAL DE TRANSMISIÓN (JITSI) ---
 Route::get('/sala-virtual/{id}', \App\Livewire\VirtualClassroom::class)
     ->middleware(['auth'])
     ->name('virtual.room');
 
-// --- NUESTRA RUTA DE LOGOUT PERSONALIZADA (AHORA ACEPTA GET) ---
-Route::any('/logout', function (Request $request) {
+// --- RUTA INFALIBLE DE LOGOUT ---
+// Destruye todo rastro de sesión y te obliga a ir al Login
+Route::get('/salir', function (Request $request) {
     Auth::guard('web')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-    return redirect('/');
-})->name('logout');
+    return redirect('/login');
+})->name('salir');
 
 // Rutas exclusivas del Administrador
 Route::middleware(['auth'])->group(function () {
@@ -57,7 +57,6 @@ Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::get('/mis-clases', \App\Livewire\Teacher\MyClasses::class)->name('teacher.clases');
 });
 
-// RUTA TEMPORAL PARA SINCRONIZAR LOS ESTILOS Y VISTAS
 Route::get('/limpiar-vistas', function () {
     try {
         Artisan::call('view:clear');

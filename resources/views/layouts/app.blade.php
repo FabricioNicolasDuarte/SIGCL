@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SIGCL Pro') }}</title>
 
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#050814">
     <link rel="apple-touch-icon" href="{{ asset('images/Recurso1.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,134 +18,138 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="font-sans relative text-gray-200 min-h-screen bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(5, 8, 20, 0.85), rgba(0, 0, 0, 0.95)), url('{{ asset('images/fondo1.png') }}');">
+<body class="font-sans relative text-gray-200 bg-cover bg-center bg-fixed bg-no-repeat overflow-hidden" style="background-image: linear-gradient(to bottom, rgba(5, 8, 20, 0.85), rgba(0, 0, 0, 0.95)), url('{{ asset('images/fondo1.png') }}');">
 
-    <div class="min-h-screen flex relative overflow-hidden w-full" x-data="{ sidebarOpen: false }">
+    <div class="h-[100dvh] flex relative w-full overflow-hidden">
 
-        <div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 bg-black/80 z-40 md:hidden backdrop-blur-sm" @click="sidebarOpen = false"></div>
-
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 w-72 bg-[#050814]/95 backdrop-blur-3xl transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 flex flex-col border-r border-[#0a192f] shadow-2xl">
-
-            <div class="p-6 flex items-center justify-between border-b border-[#0a192f]">
+        <aside class="hidden md:flex flex-col w-72 bg-[#050814]/95 backdrop-blur-3xl border-r border-[#0a192f] shadow-2xl z-20 relative h-full">
+            <div class="p-6 flex items-center justify-center border-b border-[#0a192f]">
                 <a href="{{ route('dashboard') }}" class="block transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('images/Recurso1.png') }}" alt="SIGCL Pro Logo" class="h-14 w-auto drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
+                    <img src="{{ asset('images/Recurso1.png') }}" alt="SIGCL Pro" class="h-14 w-auto drop-shadow-[0_0_15px_rgba(0,245,255,0.3)]">
                 </a>
-                <button @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-[#ff0055] transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
             </div>
 
-            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-                <a href="{{ route('dashboard') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('dashboard') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-                    Dashboard
-                </a>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
+                <a href="{{ route('dashboard') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('dashboard') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Dashboard</a>
 
-                @role('super_admin')
-                    <div class="mt-6 mb-2 px-4 text-xs font-bold tracking-wider text-[#0055ff] uppercase">Gestión Administrativa</div>
-                    <a href="{{ route('admin.sedes') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('admin.sedes') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Sedes</a>
-                    <a href="{{ route('admin.cursos') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('admin.cursos') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Cursos</a>
-                    <a href="{{ route('admin.usuarios') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('admin.usuarios') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Usuarios</a>
-                    <a href="{{ route('admin.inscripciones') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('admin.inscripciones') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Matriculaciones</a>
-                    <a href="{{ route('admin.calificaciones') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('admin.calificaciones') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Calificaciones</a>
-                @endrole
+                @hasanyrole('admin|super_admin')
+                    <div class="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-[#0055ff] uppercase">Administración</div>
+                    <a href="{{ route('admin.sedes') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('admin.sedes') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Sedes</a>
+                    <a href="{{ route('admin.cursos') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('admin.cursos') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Cursos</a>
+                    <a href="{{ route('admin.usuarios') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('admin.usuarios') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Usuarios</a>
+                    <a href="{{ route('admin.inscripciones') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('admin.inscripciones') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Matriculaciones</a>
+                    <a href="{{ route('admin.calificaciones') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('admin.calificaciones') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Calificaciones</a>
+                @endhasanyrole
 
                 @role('profesor')
-                    <div class="mt-6 mb-2 px-4 text-xs font-bold tracking-wider text-[#00ff66] uppercase">Panel Docente</div>
-                    <a href="{{ route('teacher.clases') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('teacher.clases') ? 'bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Mis Clases Activas</a>
+                    <div class="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-[#00ff66] uppercase">Docencia</div>
+                    <a href="{{ route('teacher.clases') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('teacher.clases') ? 'bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/20' : 'text-gray-400 hover:text-white' }}">Mis Clases Activas</a>
                 @endrole
 
                 @role('estudiante')
-                    <div class="mt-6 mb-2 px-4 text-xs font-bold tracking-wider text-[#00f5ff] uppercase">Panel Estudiante</div>
-                    <a href="{{ route('student.cursos') }}" class="btn btn-ghost w-full justify-start gap-3 whitespace-nowrap {{ request()->routeIs('student.cursos') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white hover:bg-[#0a192f]' }}">Mis Módulos</a>
+                    <div class="mt-6 mb-2 px-4 text-[10px] font-bold tracking-wider text-[#00f5ff] uppercase">Estudiante</div>
+                    <a href="{{ route('student.cursos') }}" class="btn btn-ghost w-full justify-start gap-3 {{ request()->routeIs('student.cursos') ? 'bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/20' : 'text-gray-400 hover:text-white' }}">Mis Módulos</a>
                 @endrole
             </nav>
 
             <div class="p-6 border-t border-[#0a192f]">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-outline border-white/20 text-gray-400 hover:bg-white/5 hover:text-white hover:border-white/50 w-full whitespace-nowrap">Cerrar Sesión</button>
-                </form>
+                <a href="{{ route('salir') }}" class="btn btn-sm btn-outline border-white/20 text-gray-400 hover:bg-[#ff0055] hover:text-white hover:border-transparent w-full">Cerrar Sesión</a>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col h-screen overflow-hidden relative min-w-0">
+        <main class="flex-1 flex flex-col h-[100dvh] relative z-10 w-full overflow-hidden">
 
-            <header class="bg-[#050814]/80 backdrop-blur-md border-b border-[#0a192f] z-10 p-3 sm:p-4 flex justify-between items-center shadow-xl">
-
-                <div class="flex items-center gap-3 md:hidden">
-                    <button @click="sidebarOpen = true" class="p-2 bg-[#00f5ff]/10 text-[#00f5ff] border border-[#00f5ff]/30 rounded-lg hover:bg-[#00f5ff] hover:text-black transition-all shadow-[0_0_10px_rgba(0,245,255,0.2)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                    </button>
-                    <a href="{{ route('dashboard') }}" class="block sm:hidden">
-                        <img src="{{ asset('images/Recurso1.png') }}" alt="Logo" class="h-8 w-auto">
+            <header class="bg-[#050814]/80 backdrop-blur-md border-b border-[#0a192f] p-3 sm:p-4 flex justify-between items-center shadow-xl">
+                <div class="md:hidden flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <img src="{{ asset('images/Recurso2.png') }}" alt="Logo" class="h-8 w-auto ml-2">
                     </a>
                 </div>
 
-                <div class="hidden md:block flex-1"></div>
+                <div class="flex-1"></div>
 
-                <div class="flex items-center gap-2 sm:gap-4 ml-auto">
-
-                    <div class="border border-[#ff0055]/30 rounded-full bg-[#ff0055]/10 flex items-center justify-center p-1 sm:p-2 transition-all hover:bg-[#ff0055]/20 shadow-[0_0_15px_rgba(255,0,85,0.2)]">
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <div class="border border-[#ff0055]/30 rounded-full bg-[#ff0055]/10 flex items-center justify-center p-2 transition-all hover:bg-[#ff0055]/20">
                         <livewire:layout.notification-bell />
-                    </div>
-
-                    <div class="text-right hidden sm:block border-r border-white/10 pr-4 mr-1">
-                        <div class="text-sm font-semibold text-white">{{ Auth::user()->name ?? 'Usuario' }}</div>
-                        <div class="text-[10px] text-[#00f5ff] font-medium tracking-wide uppercase">{{ Auth::user()->roles->first()->name ?? 'Invitado' }}</div>
                     </div>
 
                     <div class="dropdown dropdown-end">
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar hover:shadow-[0_0_15px_rgba(0,245,255,0.4)] transition-all">
-                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#00f5ff]/50 bg-black">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#00f5ff]/50 bg-black">
                                 <img src="{{ Auth::user()->avatar_url }}" alt="Avatar" class="object-cover w-full h-full rounded-full" />
                             </div>
                         </div>
                         <ul tabindex="0" class="mt-4 z-50 p-2 shadow-[0_0_30px_rgba(0,245,255,0.15)] menu menu-sm dropdown-content bg-[#050814] border border-[#0a192f] rounded-2xl w-56">
-                            <li class="sm:hidden px-4 py-2 border-b border-white/10 mb-2">
+                            <li class="px-4 py-2 border-b border-white/10 mb-2">
                                 <span class="font-bold text-white block">{{ Auth::user()->name }}</span>
                                 <span class="text-[10px] text-[#00f5ff] uppercase">{{ Auth::user()->roles->first()->name ?? 'Invitado' }}</span>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('profile') }}" class="text-gray-300 font-bold hover:text-[#00ff66] hover:bg-white/5 py-3 rounded-xl">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                                    Mi Perfil y Foto
-                                </a>
+                                <a href="{{ route('profile') }}" class="text-gray-300 hover:text-[#00ff66]">Mi Perfil y Foto</a>
                             </li>
                             <li>
-                                <form method="POST" action="{{ route('logout') }}" class="w-full m-0 p-0">
-                                    @csrf
-                                    <button type="submit" class="w-full text-left text-[#ff0055] font-bold hover:bg-[#ff0055]/10 px-4 py-3 rounded-xl transition-colors">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                                        Cerrar Sesión
-                                    </button>
-                                </form>
+                                <a href="{{ route('salir') }}" class="text-[#ff0055] hover:bg-[#ff0055]/10 font-bold">Cerrar Sesión</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </header>
 
-            <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 md:p-10 relative">
+            <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 md:p-10 pb-28 md:pb-10 custom-scrollbar">
                 @if (isset($header))
                     <h1 class="text-xl sm:text-2xl font-black text-white uppercase tracking-widest border-l-4 border-[#00f5ff] pl-3 sm:pl-4 mb-6 sm:mb-8">{{ $header }}</h1>
                 @endif
                 {{ $slot }}
             </div>
         </main>
-    </div>
-    @livewireScripts
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(registration => {
-                    console.log('PWA Lista - ServiceWorker registrado: ', registration.scope);
-                }).catch(err => {
-                    console.log('Error al registrar PWA: ', err);
-                });
-            });
-        }
-    </script>
+        <div x-data="{ menuOpen: false }" class="md:hidden fixed bottom-0 left-0 w-full z-50 pointer-events-none">
+
+            <div x-show="menuOpen" x-transition.opacity class="fixed inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto" @click="menuOpen = false"></div>
+
+            <div x-show="menuOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="translate-y-full opacity-0"
+                 x-transition:enter-end="translate-y-0 opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="translate-y-0 opacity-100"
+                 x-transition:leave-end="translate-y-full opacity-0"
+                 class="absolute bottom-24 left-4 right-4 bg-[#050814]/95 border border-[#00f5ff]/40 rounded-3xl p-5 shadow-[0_0_40px_rgba(0,245,255,0.3)] pointer-events-auto flex flex-col gap-2 max-h-[60dvh] overflow-y-auto custom-scrollbar">
+
+                <h3 class="text-center text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2 border-b border-white/10 pb-2">Menú Principal</h3>
+
+                <a href="{{ route('dashboard') }}" class="btn bg-white/5 border-none text-white justify-start">Dashboard</a>
+
+                @hasanyrole('admin|super_admin')
+                    <a href="{{ route('admin.sedes') }}" class="btn bg-white/5 border-none text-[#00f5ff] justify-start">Sedes</a>
+                    <a href="{{ route('admin.cursos') }}" class="btn bg-white/5 border-none text-[#00f5ff] justify-start">Cursos</a>
+                    <a href="{{ route('admin.usuarios') }}" class="btn bg-white/5 border-none text-[#00f5ff] justify-start">Usuarios</a>
+                    <a href="{{ route('admin.inscripciones') }}" class="btn bg-white/5 border-none text-[#00f5ff] justify-start">Matriculaciones</a>
+                    <a href="{{ route('admin.calificaciones') }}" class="btn bg-white/5 border-none text-[#00f5ff] justify-start">Calificaciones</a>
+                @endhasanyrole
+
+                @role('profesor')
+                    <a href="{{ route('teacher.clases') }}" class="btn bg-[#00ff66]/10 border-none text-[#00ff66] justify-start">Mis Clases Activas</a>
+                @endrole
+
+                @role('estudiante')
+                    <a href="{{ route('student.cursos') }}" class="btn bg-[#00f5ff]/10 border-none text-[#00f5ff] justify-start">Mis Módulos</a>
+                @endrole
+
+                <a href="{{ route('salir') }}" class="btn bg-[#ff0055]/10 border-none text-[#ff0055] justify-start mt-2">Cerrar Sesión</a>
+            </div>
+
+            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 pointer-events-auto">
+                <button @click="menuOpen = !menuOpen"
+                        class="w-16 h-16 rounded-full flex items-center justify-center border-[3px] transition-all duration-300 shadow-[0_0_20px_rgba(0,245,255,0.4)] hover:scale-105"
+                        :class="menuOpen ? 'bg-[#ff0055] border-[#ff0055] text-white shadow-[0_0_30px_rgba(255,0,85,0.5)]' : 'bg-[#050814] border-[#00f5ff] text-[#00f5ff]'">
+                    <svg x-show="!menuOpen" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    <svg x-show="menuOpen" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @livewireScripts
 </body>
 </html>
